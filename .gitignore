@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Training artifacts (large — don't commit)
+outputs/
+lora_finance/
+merged/
+gguf/
+results_*.md
+
+# HuggingFace cache (if symlinked into project)
+.cache/

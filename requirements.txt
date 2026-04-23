@@ -1,0 +1,30 @@
+# ============================================================
+# Step 1 — Install Unsloth (do this FIRST, on the GPU machine).
+# Pick ONE line below matching your CUDA version (check with `nvidia-smi`).
+# Do NOT put the unsloth line inside this file — install it directly.
+# ============================================================
+#
+# CUDA 12.1:
+#   pip install "unsloth[cu121-torch240] @ git+https://github.com/unslothai/unsloth.git"
+#
+# CUDA 12.4:
+#   pip install "unsloth[cu124-torch240] @ git+https://github.com/unslothai/unsloth.git"
+#
+# If neither matches, see: https://docs.unsloth.ai/get-started/installing-+-updating
+#
+# ============================================================
+# Step 2 — Install these regular deps:
+#   pip install -r requirements.txt
+# ============================================================
+
+# Training / LoRA
+trl>=0.11.0
+peft>=0.13.0
+accelerate>=1.0.0
+bitsandbytes>=0.44.0
+
+# Data
+datasets>=3.0.0
+
+# Chat template helpers (pulled in by unsloth but listed explicitly)
+transformers>=4.45.0
