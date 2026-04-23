@@ -1,32 +1,43 @@
-"""Sanity-check the finance dataset before training.
+"""Sanity-check a finance dataset before training.
 
 Runs on any machine with `pip install datasets` — no GPU needed.
-Usage: python inspect_dataset.py
+
+Usage:
+    python inspect_dataset.py                            # default: gbharti/finance-alpaca
+    python inspect_dataset.py FinGPT/fingpt-fiqa_qa      # any other HF dataset
 """
+
+import argparse
 
 from datasets import load_dataset
 
 
-DATASET_NAME = "gbharti/finance-alpaca"
+DEFAULT_DATASET = "gbharti/finance-alpaca"
 
 
 def main() -> None:
-    ds = load_dataset(DATASET_NAME, split="train")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("dataset", nargs="?", default=DEFAULT_DATASET)
+    parser.add_argument("--split", default="train")
+    parser.add_argument("-n", "--samples", type=int, default=3, help="How many samples to print.")
+    args = parser.parse_args()
 
-    print(f"Dataset: {DATASET_NAME}")
+    ds = load_dataset(args.dataset, split=args.split)
+
+    print(f"Dataset: {args.dataset}")
+    print(f"Split:   {args.split}")
     print(f"Rows:    {len(ds):,}")
     print(f"Columns: {ds.column_names}")
     print()
 
-    print("--- First 3 samples ---")
-    for i, row in enumerate(ds.select(range(3))):
-        print(f"\n[{i}] instruction: {row['instruction']!r}")
-        print(f"    input:       {row.get('input', '')!r}")
-        print(f"    output:      {row['output'][:200]!r}{'...' if len(row['output']) > 200 else ''}")
-
-    print()
-    rows_with_input = sum(1 for r in ds if r.get("input"))
-    print(f"Rows with non-empty 'input' field: {rows_with_input:,} / {len(ds):,}")
+    print(f"--- First {args.samples} samples ---")
+    for i, row in enumerate(ds.select(range(args.samples))):
+        print(f"\n[{i}]")
+        for k, v in row.items():
+            v_str = str(v)
+            if len(v_str) > 240:
+                v_str = v_str[:240] + "..."
+            print(f"    {k}: {v_str!r}")
 
 
 if __name__ == "__main__":
