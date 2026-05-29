@@ -22,7 +22,7 @@ Colab runs under your Google account. Any Gmail works.
 1. Go to https://huggingface.co and sign up (free).
 2. Go to https://huggingface.co/settings/tokens → **"+ Create new token"**.
 3. Name it something like `colab-finetune`, select **"Read"** permission, click Create.
-4. **Copy the token** (`hf_...`) somewhere you can paste it later — you won't be able to see it again.
+4. **Copy the token** (`hf_...`) somewhere you can paste it later — you won't be able to see it again. Store it in your password manager or a secure notes app — **never** paste it into a file inside this project (especially not a tutorial or README), since those files are tracked by git and easy to leak.
 
 ---
 
